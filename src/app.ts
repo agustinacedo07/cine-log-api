@@ -2,6 +2,8 @@ import express from "express";
 import { requestLogger } from "./middleware/requestLogger";
 import { errorHandler } from "./middleware/errorHandler";
 
+import { usersRouter } from "./routes/users.router";
+
 export function createApp() {
   const app = express();
 
@@ -15,10 +17,9 @@ export function createApp() {
     res.json({ status: "ok" });
   });
 
-  // Todo lo que llegue a /api/tasks/* lo resuelve tasksRouter.
-  // Dentro de tasksRouter, las rutas están declaradas sin el prefijo
-  // ("/", "/:id"...) — el prefijo se añade aquí, una sola vez.
-  // app.use("/api/tasks", tasksRouter);
+  //APIs
+  /** Usuarios */
+  app.use("/api/users", usersRouter);
 
   // Middleware para rutas que no coinciden con nada anterior (404).
   app.use((req, res) => {
