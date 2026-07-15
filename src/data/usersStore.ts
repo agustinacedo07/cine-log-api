@@ -26,7 +26,7 @@ export const usersStore = {
     const user: User = {
       id: randomUUID(),
       email: input.email,
-      password: input.password,
+      passwordHash: input.passwordHash,
       createdAt: new Date().toISOString(),
     };
     users.push(user);

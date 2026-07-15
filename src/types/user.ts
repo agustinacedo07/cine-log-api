@@ -5,7 +5,7 @@
 export interface User {
   id: string;
   email: string;
-  password: string;
+  passwordHash: string;
   createdAt: string;
 }
 
@@ -22,7 +22,7 @@ export interface PublicUser {
 
 export interface CreateUserInput {
   email: string;
-  password: string;
+  passwordHash: string;
 }
 
 // Función de conversión User -> PublicUser. Vive aquí, junto al tipo,

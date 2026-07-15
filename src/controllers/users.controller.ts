@@ -28,26 +28,3 @@ export function getUser(req: Request, res: Response) {
     );
   res.json(toPublicUser(user));
 }
-
-export function createUser(req: Request, res: Response) {
-  const { email, password } = req.body;
-
-  if (typeof email !== "string" || !EMAIL_REGEX.test(email)) {
-    throw new HttpError(
-      400,
-      'El campo "email" es obligatorio y debe tener formato de email',
-    );
-  }
-  if (typeof password !== "string" || password.length < 8) {
-    throw new HttpError(
-      400,
-      'El campo "password" es obligatorio y debe tener al menos 8 caracteres',
-    );
-  }
-  if (usersStore.getByEmail(email)) {
-    throw new HttpError(409, "Ya existe un usuario con ese email");
-  }
-
-  const user = usersStore.create({ email, password });
-  res.status(201).json(toPublicUser(user));
-}

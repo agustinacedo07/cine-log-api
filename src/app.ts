@@ -3,6 +3,7 @@ import { requestLogger } from "./middleware/requestLogger";
 import { errorHandler } from "./middleware/errorHandler";
 
 import { usersRouter } from "./routes/users.router";
+import { authRouter } from "./routes/auth.routes";
 
 export function createApp() {
   const app = express();
@@ -20,6 +21,9 @@ export function createApp() {
   //APIs
   /** Usuarios */
   app.use("/api/users", usersRouter);
+
+  /** Autenticación */
+  app.use("/api/auth", authRouter);
 
   // Middleware para rutas que no coinciden con nada anterior (404).
   app.use((req, res) => {
