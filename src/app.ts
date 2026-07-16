@@ -13,12 +13,12 @@ export function createApp() {
   app.use(requestLogger); // 1. registra la petición
   app.use(express.json()); // 2. parsea el body JSON a req.body
 
-  // Ruta de comprobación rápida, útil para verificar que el server está vivo.
+  //APIs
+  /** TEST */
   app.get("/health", (_req, res) => {
     res.json({ status: "ok" });
   });
 
-  //APIs
   /** Usuarios */
   app.use("/api/users", usersRouter);
 
