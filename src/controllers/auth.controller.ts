@@ -88,3 +88,22 @@ export async function login(req: Request, res: Response) {
   const token = signToken(user.id);
   res.json({ token, user: toPublicUser(user) });
 }
+
+export function me(req: Request, res: Response) {
+  // req.user debería existir SIEMPRE aquí, porque esta función solo se
+  // ejecuta si requireAuth ya dejó pasar la petición (ver auth.routes.ts).
+  // Aun así comprobamos explícitamente en vez de usar `req.user!.id` a
+  // ciegas: es más robusto ante un futuro cambio de orden de middlewares
+  // por error, y TypeScript nos obliga a manejar el caso "undefined" de
+  // todos modos porque el tipo es `user?`.
+  if (!req.user) {
+    throw new HttpError(401, "No autenticado");
+  }
+
+  const user = usersStore.getById(req.user.id);
+  if (!user) {
+    throw new HttpError(404, "Usuario no encontrado");
+  }
+
+  res.json(toPublicUser(user));
+}
