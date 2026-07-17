@@ -2,6 +2,9 @@ import express from "express";
 import { requestLogger } from "./middleware/requestLogger";
 import { errorHandler } from "./middleware/errorHandler";
 
+import { usersRouter } from "./routes/users.router";
+import { authRouter } from "./routes/auth.routes";
+
 export function createApp() {
   const app = express();
 
@@ -10,15 +13,17 @@ export function createApp() {
   app.use(requestLogger); // 1. registra la petición
   app.use(express.json()); // 2. parsea el body JSON a req.body
 
-  // Ruta de comprobación rápida, útil para verificar que el server está vivo.
+  //APIs
+  /** TEST */
   app.get("/health", (_req, res) => {
     res.json({ status: "ok" });
   });
 
-  // Todo lo que llegue a /api/tasks/* lo resuelve tasksRouter.
-  // Dentro de tasksRouter, las rutas están declaradas sin el prefijo
-  // ("/", "/:id"...) — el prefijo se añade aquí, una sola vez.
-  // app.use("/api/tasks", tasksRouter);
+  /** Usuarios */
+  app.use("/api/users", usersRouter);
+
+  /** Autenticación */
+  app.use("/api/auth", authRouter);
 
   // Middleware para rutas que no coinciden con nada anterior (404).
   app.use((req, res) => {
