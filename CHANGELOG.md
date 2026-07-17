@@ -2,7 +2,7 @@
 
 Todos los cambios importantes de este proyecto serán documentados aquí.
 
-## [0.1.1] - 2026-07-17
+## [0.2.0] - 2026-07-17
 
 ### Added
 
